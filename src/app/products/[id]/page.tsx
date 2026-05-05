@@ -110,7 +110,6 @@ export default function ProductDetailPage() {
           >
             <div className={`absolute inset-0 rounded-full blur-[120px] transition-colors duration-1000 ${isDark ? "bg-blue-500/10" : "bg-blue-500/20"}`} />
             <motion.img 
-              style={{ translateZ: 100 }}
               whileHover={{ scale: 1.05 }}
               transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
               src={product.image} 
@@ -118,7 +117,7 @@ export default function ProductDetailPage() {
               width={800}
               height={800}
               className="w-full h-auto object-contain drop-shadow-[0_50px_100px_rgba(0,0,0,0.15)] dark:drop-shadow-[0_50px_100px_rgba(0,0,0,0.5)] relative z-10"
-              style={{ filter: getProductFilter(product.id) }}
+              style={{ translateZ: 100, filter: getProductFilter(product.id) }}
             />
           </motion.div>
 
