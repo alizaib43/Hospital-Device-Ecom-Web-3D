@@ -1,0 +1,6 @@
+1:"$Sreact.fragment"
+2:I[67015,["/Hospital-Device-Ecom-Web-3D/_next/static/chunks/0.z.~kkgach-a.js","/Hospital-Device-Ecom-Web-3D/_next/static/chunks/0d3shmwh5_nmn.js","/Hospital-Device-Ecom-Web-3D/_next/static/chunks/0zh9a-156051f.js","/Hospital-Device-Ecom-Web-3D/_next/static/chunks/0jc5ez_9l3-oa.js","/Hospital-Device-Ecom-Web-3D/_next/static/chunks/0a85k6org1ub1.js","/Hospital-Device-Ecom-Web-3D/_next/static/chunks/0.jn6~71yd5nf.js"],"default"]
+3:I[97367,["/Hospital-Device-Ecom-Web-3D/_next/static/chunks/0.z.~kkgach-a.js","/Hospital-Device-Ecom-Web-3D/_next/static/chunks/0d3shmwh5_nmn.js","/Hospital-Device-Ecom-Web-3D/_next/static/chunks/0zh9a-156051f.js","/Hospital-Device-Ecom-Web-3D/_next/static/chunks/0jc5ez_9l3-oa.js"],"OutletBoundary"]
+4:"$Sreact.suspense"
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{}],[["$","script","script-0",{"src":"/Hospital-Device-Ecom-Web-3D/_next/static/chunks/0a85k6org1ub1.js","async":true}],["$","script","script-1",{"src":"/Hospital-Device-Ecom-Web-3D/_next/static/chunks/0.jn6~71yd5nf.js","async":true}]],["$","$L3",null,{"children":["$","$4",null,{"name":"Next.MetadataOutlet","children":"$@5"}]}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"uizgRqKpeckgi2KJpoMl5"}
+5:null
