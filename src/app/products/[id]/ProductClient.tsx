@@ -7,7 +7,7 @@ import Link from "next/link";
 import { ArrowLeft, Star, ShoppingCart, Shield, Truck, Zap, Check, ArrowRight } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import Hero3D from "@/components/Hero3D";
+
 import { allProducts } from "@/data/products";
 import { useCart } from "@/context/CartContext";
 import { useState, useEffect } from "react";
@@ -88,7 +88,7 @@ export default function ProductClient() {
   return (
     <main className="min-h-screen relative flex flex-col bg-transparent print:bg-white overflow-hidden">
       <Navbar />
-      <Hero3D />
+
       
       {/* Scroll Progress Bar */}
       <motion.div 

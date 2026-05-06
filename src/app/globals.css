@@ -110,8 +110,8 @@ body {
 
 .blob {
   position: absolute;
-  width: 600px;
-  height: 600px;
+  width: min(600px, 80vw);
+  height: min(600px, 80vw);
   background: radial-gradient(circle, var(--primary) 0%, transparent 70%);
   border-radius: 50%;
   filter: blur(100px);
@@ -119,6 +119,25 @@ body {
   pointer-events: none;
   opacity: 0.15;
   animation: float-blob 25s ease-in-out infinite;
+  will-change: transform;
+}
+
+@media (max-width: 768px) {
+  .blob {
+    filter: blur(60px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .blob {
+    animation: none;
+  }
 }
 
 .shimmer-btn {
