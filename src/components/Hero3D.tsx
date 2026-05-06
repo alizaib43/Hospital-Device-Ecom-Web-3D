@@ -150,9 +150,11 @@ function DNAStrand({ isDark, isMobile }: { isDark: boolean; isMobile: boolean })
     };
     window.addEventListener("mousemove", handlePointerMove);
     window.addEventListener("touchmove", handlePointerMove, { passive: true });
+    window.addEventListener("touchstart", handlePointerMove, { passive: true });
     return () => {
       window.removeEventListener("mousemove", handlePointerMove);
       window.removeEventListener("touchmove", handlePointerMove);
+      window.removeEventListener("touchstart", handlePointerMove);
     };
   }, []);
 
