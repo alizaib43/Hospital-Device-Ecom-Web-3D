@@ -172,7 +172,9 @@ function DNAStrand({ isDark, isMobile }: { isDark: boolean; isMobile: boolean })
       
       groupRef.current.rotation.x = THREE.MathUtils.lerp(groupRef.current.rotation.x, targetRotationX, 0.08);
       groupRef.current.rotation.z = THREE.MathUtils.lerp(groupRef.current.rotation.z, targetRotationZ, 0.08);
-      groupRef.current.position.y = THREE.MathUtils.lerp(groupRef.current.position.y, bobbing, 0.06);
+      // Lift it up on mobile to center it behind the hero text
+      const targetY = bobbing + (isMobile ? 1.5 : 0);
+      groupRef.current.position.y = THREE.MathUtils.lerp(groupRef.current.position.y, targetY, 0.06);
     }
     
     if (lightRef.current && !isMobile) {
@@ -254,7 +256,7 @@ export default function Hero3D() {
       
       <ScrollContext.Provider value={scrollData}>
         <Canvas
-          camera={{ position: [0, 0, 10], fov: currentIsMobile ? 65 : 45 }}
+          camera={{ position: [0, 0, currentIsMobile ? 12 : 10], fov: currentIsMobile ? 55 : 45 }}
           dpr={currentIsMobile ? [1, 1.5] : [1, 2]}
           gl={{
             alpha: true,
