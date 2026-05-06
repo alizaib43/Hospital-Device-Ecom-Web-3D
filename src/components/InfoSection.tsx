@@ -68,6 +68,7 @@ export default function InfoSection() {
               key={index} 
               variants={itemVariants}
               whileHover={{ y: -8, transition: { duration: 0.3 } }}
+              whileTap={{ scale: 0.98, y: -2 }}
               className="glass p-6 sm:p-8 rounded-[2rem] group cursor-pointer border border-border shadow-xl hover:shadow-2xl transition-all duration-500 relative overflow-hidden"
             >
               <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />

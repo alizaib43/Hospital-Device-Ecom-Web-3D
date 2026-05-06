@@ -107,6 +107,14 @@ export default function Home() {
             <motion.a 
               whileHover={{ scale: 1.05, y: -5 }}
               whileTap={{ scale: 0.95 }}
+              animate={{ 
+                y: [0, -5, 0],
+              }}
+              transition={{ 
+                y: { duration: 3, repeat: Infinity, ease: "easeInOut" },
+                scale: { duration: 0.2 },
+                default: { duration: 0.5 }
+              }}
               href="#products" 
               className={`w-full sm:w-auto px-8 sm:px-12 lg:px-16 py-4 sm:py-6 lg:py-8 rounded-[1.5rem] sm:rounded-[2.5rem] font-black uppercase tracking-[0.25em] transition-all duration-500 flex items-center justify-center gap-4 group/btn shimmer-btn ${
                 isDark 
@@ -165,6 +173,7 @@ export default function Home() {
             key={item.id}
             initial={{ opacity: 0, y: 100 }}
             whileInView={{ opacity: 1, y: 0 }}
+            whileTap={{ scale: 0.995 }} // Subtle tap feedback for whole sections
             viewport={{ once: true, amount: 0.1 }}
             transition={{ duration: 1.2, ease: [0.33, 1, 0.68, 1] }}
             className="relative"
