@@ -95,17 +95,14 @@ function BeadPair({ index, currentRadius, globalPointer, isDark, isMobile, beadC
     const angle = newY * (Math.PI / 2.5);
     groupRef.current.rotation.y = angle;
 
-    // Skip mouse interaction on mobile for perf
-    if (!isMobile) {
-      const mouseX = globalPointer.current.x * 5;
-      const mouseY = globalPointer.current.y * 5;
-      const dist = Math.sqrt(Math.pow(groupRef.current.position.x - mouseX, 2) + Math.pow(newY - mouseY, 2));
-      
-      const s = dist < 2 ? 1.6 : 1.0;
-      targetScale.current.set(s, s, s);
-      if (mesh1Ref.current) mesh1Ref.current.scale.lerp(targetScale.current, 0.1);
-      if (mesh2Ref.current) mesh2Ref.current.scale.lerp(targetScale.current, 0.1);
-    }
+    const mouseX = globalPointer.current.x * 5;
+    const mouseY = globalPointer.current.y * 5;
+    const dist = Math.sqrt(Math.pow(groupRef.current.position.x - mouseX, 2) + Math.pow(newY - mouseY, 2));
+    
+    const s = dist < 2 ? 1.6 : 1.0;
+    targetScale.current.set(s, s, s);
+    if (mesh1Ref.current) mesh1Ref.current.scale.lerp(targetScale.current, 0.1);
+    if (mesh2Ref.current) mesh2Ref.current.scale.lerp(targetScale.current, 0.1);
   });
 
   return (
@@ -145,18 +142,19 @@ function DNAStrand({ isDark, isMobile }: { isDark: boolean; isMobile: boolean })
   const scrollRef = useSharedScroll();
 
   useEffect(() => {
-    // Skip touch-based pointer tracking on mobile for perf
-    if (isMobile) return;
-
-    const handlePointerMove = (e: MouseEvent) => {
-      globalPointer.current.x = (e.clientX / window.innerWidth) * 2 - 1;
-      globalPointer.current.y = -(e.clientY / window.innerHeight) * 2 + 1;
+    const handlePointerMove = (e: any) => {
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+      globalPointer.current.x = (clientX / window.innerWidth) * 2 - 1;
+      globalPointer.current.y = -(clientY / window.innerHeight) * 2 + 1;
     };
     window.addEventListener("mousemove", handlePointerMove);
+    window.addEventListener("touchmove", handlePointerMove, { passive: true });
     return () => {
       window.removeEventListener("mousemove", handlePointerMove);
+      window.removeEventListener("touchmove", handlePointerMove);
     };
-  }, [isMobile]);
+  }, []);
 
   useFrame((state) => {
     const scrollVelocity = scrollRef?.current?.velocity ?? 0;
@@ -177,14 +175,14 @@ function DNAStrand({ isDark, isMobile }: { isDark: boolean; isMobile: boolean })
       groupRef.current.position.y = THREE.MathUtils.lerp(groupRef.current.position.y, targetY, 0.06);
     }
     
-    if (lightRef.current && !isMobile) {
+    if (lightRef.current) {
       lightRef.current.position.x = globalPointer.current.x * 12;
       lightRef.current.position.y = globalPointer.current.y * 12;
     }
   });
 
   const currentRadius = isMobile ? 1.0 : 1.5;
-  const beadCount = isMobile ? 14 : 30; // Increased slightly for better coverage
+  const beadCount = isMobile ? 30 : 30; // Set to 30 for both to fill screen
   const spacing = 0.5;
   const range = beadCount * spacing;
 
