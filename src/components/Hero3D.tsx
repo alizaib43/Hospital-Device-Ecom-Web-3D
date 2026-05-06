@@ -53,13 +53,15 @@ const SPHERE_GEO_MOBILE = [0.2, 12, 12] as const;
 const CYL_SEGMENTS_DESKTOP = 16;
 const CYL_SEGMENTS_MOBILE = 6;
 
-function BeadPair({ index, currentRadius, globalPointer, isDark, isMobile, beadCount }: {
+function BeadPair({ index, currentRadius, globalPointer, isDark, isMobile, beadCount, spacing, range }: {
   index: number;
   currentRadius: number;
   globalPointer: React.RefObject<{ x: number; y: number }>;
   isDark: boolean;
   isMobile: boolean;
   beadCount: number;
+  spacing: number;
+  range: number;
 }) {
   const groupRef = useRef<THREE.Group>(null);
   const mesh1Ref = useRef<THREE.Mesh>(null);
@@ -75,7 +77,6 @@ function BeadPair({ index, currentRadius, globalPointer, isDark, isMobile, beadC
   useFrame((state) => {
     if (!groupRef.current) return;
     
-    const spacing = 0.5;
     const baseOffset = (index - beadCount / 2) * spacing;
     
     const timeSpeed = 0.3;
@@ -85,7 +86,6 @@ function BeadPair({ index, currentRadius, globalPointer, isDark, isMobile, beadC
     const scrollY = scrollRef?.current?.y ?? 0;
     const scrollOffset = scrollY * scrollSpeed; 
     
-    const range = 15; 
     let newY = (baseOffset - scrollOffset - timeOffset) % range;
     
     if (newY < -range / 2) newY += range;
@@ -184,13 +184,25 @@ function DNAStrand({ isDark, isMobile }: { isDark: boolean; isMobile: boolean })
   });
 
   const currentRadius = isMobile ? 1.0 : 1.5;
-  const beadCount = isMobile ? 12 : 30;
+  const beadCount = isMobile ? 14 : 30; // Increased slightly for better coverage
+  const spacing = 0.5;
+  const range = beadCount * spacing;
 
   return (
     <group ref={groupRef}>
       <pointLight ref={lightRef} distance={15} intensity={isDark ? 8 : 4} color={isDark ? "#60a5fa" : "#3b82f6"} />
       {Array.from({ length: beadCount }).map((_, i) => (
-        <BeadPair key={i} index={i} currentRadius={currentRadius} globalPointer={globalPointer} isDark={isDark} isMobile={isMobile} beadCount={beadCount} />
+        <BeadPair 
+          key={i} 
+          index={i} 
+          currentRadius={currentRadius} 
+          globalPointer={globalPointer} 
+          isDark={isDark} 
+          isMobile={isMobile} 
+          beadCount={beadCount} 
+          spacing={spacing} 
+          range={range} 
+        />
       ))}
     </group>
   );
