@@ -95,14 +95,17 @@ function BeadPair({ index, currentRadius, globalPointer, isDark, isMobile, beadC
     const angle = newY * (Math.PI / 2.5);
     groupRef.current.rotation.y = angle;
 
-    const mouseX = globalPointer.current.x * 5;
-    const mouseY = globalPointer.current.y * 5;
+    const mouseX = globalPointer.current.x * (isMobile ? 7 : 5);
+    const mouseY = globalPointer.current.y * (isMobile ? 7 : 5);
     const dist = Math.sqrt(Math.pow(groupRef.current.position.x - mouseX, 2) + Math.pow(newY - mouseY, 2));
     
-    const s = dist < 2 ? 1.6 : 1.0;
+    const interactionRadius = isMobile ? 3.5 : 2.0;
+    const maxScale = isMobile ? 2.2 : 1.6;
+    
+    const s = dist < interactionRadius ? maxScale : 1.0;
     targetScale.current.set(s, s, s);
-    if (mesh1Ref.current) mesh1Ref.current.scale.lerp(targetScale.current, 0.1);
-    if (mesh2Ref.current) mesh2Ref.current.scale.lerp(targetScale.current, 0.1);
+    if (mesh1Ref.current) mesh1Ref.current.scale.lerp(targetScale.current, 0.12);
+    if (mesh2Ref.current) mesh2Ref.current.scale.lerp(targetScale.current, 0.12);
   });
 
   return (
