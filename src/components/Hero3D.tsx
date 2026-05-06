@@ -166,8 +166,8 @@ function DNAStrand({ isDark, isMobile }: { isDark: boolean; isMobile: boolean })
     
     if (groupRef.current) {
       const maxTilt = (140 * Math.PI) / 360; 
-      const targetRotationX = isMobile ? 0 : globalPointer.current.y * maxTilt;
-      const targetRotationZ = isMobile ? 0 : -globalPointer.current.x * maxTilt;
+      const targetRotationX = globalPointer.current.y * maxTilt;
+      const targetRotationZ = -globalPointer.current.x * maxTilt;
       const bobbing = Math.sin(state.clock.elapsedTime * 1.5) * 0.4;
       
       // Apply scroll velocity to rotation Y
@@ -175,6 +175,10 @@ function DNAStrand({ isDark, isMobile }: { isDark: boolean; isMobile: boolean })
       
       groupRef.current.rotation.x = THREE.MathUtils.lerp(groupRef.current.rotation.x, targetRotationX, 0.08);
       groupRef.current.rotation.z = THREE.MathUtils.lerp(groupRef.current.rotation.z, targetRotationZ, 0.08);
+      
+      // Add subtle X-axis shift based on interaction
+      const targetX = globalPointer.current.x * (isMobile ? 1.5 : 2.5);
+      groupRef.current.position.x = THREE.MathUtils.lerp(groupRef.current.position.x, targetX, 0.05);
       // Lift it up on mobile to center it behind the hero text
       const targetY = bobbing + (isMobile ? 1.5 : 0);
       groupRef.current.position.y = THREE.MathUtils.lerp(groupRef.current.position.y, targetY, 0.06);
