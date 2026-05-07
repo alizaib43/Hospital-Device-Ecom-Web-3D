@@ -1,2 +1,2 @@
-:HL["/Hospital-Device-Ecom-Web-3D/_next/static/chunks/08-tjc6c8y.a..css","style"]
-0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"/_not-found","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}},"staleTime":300,"buildId":"bIKldy4qBjUlDLPctTwpx"}
+:HL["/Hospital-Device-Ecom-Web-3D/_next/static/chunks/0sl3ovg0h5ok_.css","style"]
+0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"/_not-found","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}},"staleTime":300,"buildId":"hQuO0NmkxrNs7ELHwMAl5"}
