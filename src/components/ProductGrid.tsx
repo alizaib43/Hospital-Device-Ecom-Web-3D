@@ -8,6 +8,8 @@ import { Search, ShoppingCart, Check, Star, Plus } from "lucide-react";
 import { allProducts, categories } from "@/data/products";
 import { useCart } from "@/context/CartContext";
 import { useTheme } from "next-themes";
+import { getAssetPath } from "@/utils/assets";
+
 
 export default function ProductGrid() {
   const [activeCategory, setActiveCategory] = useState("All");
@@ -117,12 +119,13 @@ export default function ProductGrid() {
               <Link href={`/products/${product.id}`} className="block p-6 sm:p-8 lg:p-10 pb-4">
                 <div className="aspect-[4/3] rounded-[2rem] bg-muted/30 mb-8 relative overflow-hidden flex items-center justify-center group-hover:bg-muted/50 transition-colors">
                   <Image 
-                    src={product.image} 
+                    src={getAssetPath(product.image)} 
                     alt={product.name}
                     width={300}
                     height={300}
                     className="object-contain p-8 transition-transform duration-700 group-hover:scale-110"
                     style={{ filter: isDark ? getProductFilter(product.id) : "none" }}
+
                   />
                   <div className="absolute top-4 right-4">
                     <span className="px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest bg-white/10 backdrop-blur-md border border-white/20 text-foreground shadow-lg">

@@ -12,6 +12,8 @@ import { allProducts } from "@/data/products";
 import { useCart } from "@/context/CartContext";
 import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
+import { getAssetPath } from "@/utils/assets";
+
 
 export default function ProductClient() {
   const { id } = useParams();
@@ -112,7 +114,7 @@ export default function ProductClient() {
             <motion.img 
               whileHover={{ scale: 1.05 }}
               transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-              src={product.image} 
+              src={getAssetPath(product.image)} 
               alt={product.name}
               width={800}
               height={800}
@@ -266,7 +268,7 @@ export default function ProductClient() {
                   </motion.div>
 
                   <img 
-                    src={p.image} 
+                    src={getAssetPath(p.image)} 
                     alt={p.name} 
                     className="w-full h-full object-contain transition-transform duration-1000 group-hover:scale-110" 
                     style={{ filter: getProductFilter(p.id) }}

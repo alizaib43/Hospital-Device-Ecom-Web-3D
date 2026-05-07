@@ -8,6 +8,8 @@ import Image from "next/image";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { allProducts } from "@/data/products";
+import { getAssetPath } from "@/utils/assets";
+
 
 export default function ScienceClient() {
   return (
@@ -51,7 +53,7 @@ export default function ScienceClient() {
                 <div className="aspect-[4/3] rounded-[2rem] bg-muted/20 border border-border relative flex items-center justify-center p-8 group overflow-hidden">
                   <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
                   <Image 
-                    src={product.image} 
+                    src={getAssetPath(product.image)} 
                     alt={product.name}
                     width={500}
                     height={500}

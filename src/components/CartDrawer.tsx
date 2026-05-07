@@ -5,6 +5,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X, ShoppingBag, Plus, Minus, Trash2, ArrowRight, Check } from "lucide-react";
 import Image from "next/image";
 import { useCart } from "@/context/CartContext";
+import { getAssetPath } from "@/utils/assets";
+
 
 export default function CartDrawer({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
   const { cart, removeFromCart, updateQuantity, cartTotal, cartCount, clearCart } = useCart();
@@ -89,7 +91,7 @@ export default function CartDrawer({ isOpen, onClose }: { isOpen: boolean; onClo
                     className="flex gap-4 p-4 bg-muted/30 rounded-2xl border border-border"
                   >
                     <div className="relative w-20 h-20 bg-muted rounded-xl flex-shrink-0 flex items-center justify-center p-2">
-                      <Image src={item.image} alt={item.name} fill className="object-contain p-2" />
+                      <Image src={getAssetPath(item.image)} alt={item.name} fill className="object-contain p-2" />
                     </div>
                     <div className="flex-grow">
                       <div className="flex justify-between items-start mb-1">
