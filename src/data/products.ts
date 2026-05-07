@@ -5,7 +5,8 @@ export const allProducts = [
     category: "X-Ray Imaging",
     price: "$45,000",
     rating: 4.9,
-    image: "/portable_xray_1777573877811.png",
+    image: "/aerox_scanner_nobg.png",
+
     description: "Next-gen portable x-ray with AI-assisted diagnosis and real-time cloud sync.",
     longDescription: "The AeroX Portable Scanner represents a breakthrough in mobile diagnostics. Designed for emergency rooms and field hospitals, it delivers high-resolution X-ray imaging in a compact, battery-operated form factor. Integrated AI algorithms assist in rapid fracture and pathology detection.",
     specs: {
@@ -21,7 +22,8 @@ export const allProducts = [
     category: "Magnetic Resonance",
     price: "$1.2M",
     rating: 5.0,
-    image: "/mri_scanner_1777574926132.png",
+    image: "/quantum_mri_nobg.png",
+
     description: "Ultra-high-field MRI scanner for advanced clinical research and neurology.",
     longDescription: "The Quantum MRI 7T is the pinnacle of magnetic resonance technology. With a 7-Tesla superconducting magnet, it provides unprecedented anatomical detail, allowing clinicians to visualize microstructures of the brain and other organs with extreme clarity.",
     specs: {
@@ -37,7 +39,8 @@ export const allProducts = [
     category: "Ultrasound",
     price: "$85,000",
     rating: 4.8,
-    image: "/ultrasound_machine_1777574731441.png",
+    image: "/sonovista_pro_nobg.png",
+
     description: "Premium wheeled ultrasound with real-time 4D imaging and enhanced depth.",
     longDescription: "SonoVista Pro offers professional-grade ultrasound imaging with a focus on ease of use and diagnostic confidence. Featuring advanced Doppler flow and real-time 4D rendering, it is the ideal choice for cardiology and obstetrics.",
     specs: {
@@ -53,7 +56,7 @@ export const allProducts = [
     category: "Patient Monitors",
     price: "$15,000",
     rating: 4.7,
-    image: "/portable_xray_1777573877811.png", 
+    image: "/vitalsync_monitor_nobg.png", 
     description: "Continuous vitals monitoring system with predictive alerting algorithms.",
     longDescription: "VitalSync ICU Monitor provides comprehensive real-time tracking of patient vitals. Its predictive engine analyzes trends to alert medical staff before critical events occur, improving patient outcomes and streamlining ICU workflows.",
     specs: {
@@ -69,7 +72,7 @@ export const allProducts = [
     category: "Surgical Robotics",
     price: "$2.5M",
     rating: 5.0,
-    image: "/mri_scanner_1777574926132.png", 
+    image: "/surgibot_arm_nobg.png", 
     description: "Next-generation surgical robotics for minimally invasive precision procedures.",
     longDescription: "The SurgiBot Robotic Arm extends the surgeon's capabilities with sub-millimeter precision. Featuring haptic feedback and 3D immersive visualization, it enables complex surgeries to be performed with smaller incisions and faster recovery times.",
     specs: {
@@ -85,7 +88,7 @@ export const allProducts = [
     category: "Ultrasound",
     price: "$115,000",
     rating: 4.8,
-    image: "/ultrasound_machine_1777574731441.png", 
+    image: "/echocardio_elite_nobg.png", 
     description: "Specialized cardiovascular ultrasound machine with advanced doppler.",
     longDescription: "Engineered specifically for the heart, the EchoCardio Elite provides lightning-fast image acquisition and automated quantification of cardiac function. It simplifies complex echo exams and provides accurate results in record time.",
     specs: {

@@ -9,7 +9,125 @@ import { allProducts, categories } from "@/data/products";
 import { useCart } from "@/context/CartContext";
 import { useTheme } from "next-themes";
 import { getAssetPath } from "@/utils/assets";
+import { useMotionValue, useSpring, useTransform } from "framer-motion";
 
+
+
+function ProductCard({ product, isDark, handleAddToCart, addedItems, getProductFilter }: any) {
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  const rotateX = useSpring(useTransform(mouseY, [-0.5, 0.5], [15, -15]), { stiffness: 150, damping: 20 });
+  const rotateY = useSpring(useTransform(mouseX, [-0.5, 0.5], [-15, 15]), { stiffness: 150, damping: 20 });
+
+  function onMouseMove(e: React.MouseEvent<HTMLDivElement>) {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const width = rect.width;
+    const height = rect.height;
+    const mouseXRelative = e.clientX - rect.left;
+    const mouseYRelative = e.clientY - rect.top;
+    
+    mouseX.set(mouseXRelative / width - 0.5);
+    mouseY.set(mouseYRelative / height - 0.5);
+  }
+
+  function onMouseLeave() {
+    mouseX.set(0);
+    mouseY.set(0);
+  }
+
+  return (
+    <motion.div
+      layout
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.9 }}
+      onMouseMove={onMouseMove}
+      onMouseLeave={onMouseLeave}
+      style={{
+        rotateX,
+        rotateY,
+        transformStyle: "preserve-3d",
+      }}
+      className="bg-card border border-border rounded-[1.5rem] sm:rounded-[2.5rem] overflow-hidden group cursor-pointer relative shadow-xl hover:shadow-2xl transition-all duration-500 h-full perspective-1000"
+    >
+      {/* Magnetic Glow Effect */}
+      <motion.div
+        className="absolute inset-0 z-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+        style={{
+          background: useTransform(
+            [mouseX, mouseY],
+            ([x, y]: any) => `radial-gradient(circle at ${(x + 0.5) * 100}% ${(y + 0.5) * 100}%, ${isDark ? "rgba(59, 130, 246, 0.15)" : "rgba(37, 99, 235, 0.08)"}, transparent 70%)`
+          ),
+        }}
+      />
+
+      <Link href={`/products/${product.id}`} className="block p-6 sm:p-8 lg:p-10 pb-4 relative z-10" style={{ transform: "translateZ(50px)" }}>
+        <div className="aspect-[4/3] rounded-[2rem] bg-muted/30 mb-8 relative overflow-hidden flex items-center justify-center group-hover:bg-muted/50 transition-colors">
+          <Image 
+            src={getAssetPath(product.image)} 
+            alt={product.name}
+            width={300}
+            height={300}
+            className="object-contain p-8 transition-transform duration-700 group-hover:scale-110"
+            style={{ 
+              filter: isDark ? getProductFilter(product.id) : "none",
+              transform: "translateZ(80px)" 
+            }}
+          />
+          <div className="absolute top-4 right-4" style={{ transform: "translateZ(100px)" }}>
+            <span className="px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest bg-white/10 backdrop-blur-md border border-white/20 text-foreground shadow-lg">
+              In Stock
+            </span>
+          </div>
+        </div>
+
+        <div className="space-y-3 px-2 mb-8" style={{ transform: "translateZ(60px)" }}>
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-black uppercase tracking-[0.1em] sm:tracking-[0.2em] text-blue-500">{product.category}</span>
+            <div className="flex gap-1">
+              {[1, 2, 3, 4, 5].map((s) => (
+                <div key={s} className={`w-1.5 h-1.5 rounded-full ${s <= 4 ? "bg-blue-500" : "bg-muted"}`} />
+              ))}
+            </div>
+          </div>
+          <h3 className="text-2xl font-black text-foreground tracking-tight group-hover:text-blue-500 transition-colors leading-tight">
+            {product.name}
+          </h3>
+          <p className="text-muted-foreground text-sm line-clamp-2 leading-relaxed font-medium">
+            {product.description}
+          </p>
+        </div>
+
+        <div className="flex items-center justify-between px-2 pt-6 border-t border-border" style={{ transform: "translateZ(40px)" }}>
+          <div className="flex flex-col">
+            <span className="text-[10px] uppercase tracking-widest font-bold text-muted-foreground mb-1">MSRP</span>
+            <span className="text-3xl font-black text-foreground tracking-tighter">${product.price.toLocaleString()}</span>
+          </div>
+        </div>
+      </Link>
+
+      {/* Quick Add Button */}
+      <motion.button
+        whileHover={{ scale: 1.1, translateZ: "120px" }}
+        whileTap={{ scale: 0.9 }}
+        onClick={(e) => handleAddToCart(e, product)}
+        className={`absolute bottom-8 right-8 w-14 h-14 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center shadow-2xl transition-all duration-500 z-20 ${
+          addedItems.includes(product.id)
+            ? "bg-green-500 text-white translate-y-0 opacity-100"
+            : "bg-blue-600 text-white opacity-100 md:translate-y-4 md:opacity-0 md:group-hover:translate-y-0 md:group-hover:opacity-100 hover:bg-blue-500"
+        }`}
+        style={{ transform: "translateZ(110px)" }}
+      >
+        {addedItems.includes(product.id) ? (
+          <Check className="w-6 h-6" />
+        ) : (
+          <Plus className="w-6 h-6" />
+        )}
+      </motion.button>
+    </motion.div>
+  );
+}
 
 export default function ProductGrid() {
   const [activeCategory, setActiveCategory] = useState("All");
@@ -81,7 +199,7 @@ export default function ProductGrid() {
                 onClick={() => setActiveCategory(category)}
                 className={`px-5 sm:px-6 py-2.5 sm:py-3 rounded-xl sm:rounded-2xl text-[10px] sm:text-xs font-black uppercase tracking-[0.15em] sm:tracking-[0.2em] transition-all duration-300 border whitespace-nowrap ${
                   activeCategory === category 
-                    ? "bg-blue-600 text-white border-blue-400 shadow-[0_10px_20px_rgba(37,99,235,0.3)]" 
+                    ? "bg-blue-600 text-white border-blue-400 shadow-[0_10px_20_rgba(37,99,235,0.3)]" 
                     : "bg-muted text-muted-foreground border-border hover:bg-muted/80"
                 }`}
               >
@@ -106,80 +224,18 @@ export default function ProductGrid() {
       <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10 lg:gap-12">
         <AnimatePresence mode="popLayout">
           {filteredProducts.map((product) => (
-            <motion.div
-              key={product.id}
-              layout
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9 }}
-              whileHover={{ y: -10 }}
-              whileTap={{ scale: 0.98 }}
-              className="bg-card border border-border rounded-[1.5rem] sm:rounded-[2.5rem] overflow-hidden group cursor-pointer relative shadow-xl hover:shadow-2xl transition-all duration-500 h-full"
-            >
-              <Link href={`/products/${product.id}`} className="block p-6 sm:p-8 lg:p-10 pb-4">
-                <div className="aspect-[4/3] rounded-[2rem] bg-muted/30 mb-8 relative overflow-hidden flex items-center justify-center group-hover:bg-muted/50 transition-colors">
-                  <Image 
-                    src={getAssetPath(product.image)} 
-                    alt={product.name}
-                    width={300}
-                    height={300}
-                    className="object-contain p-8 transition-transform duration-700 group-hover:scale-110"
-                    style={{ filter: isDark ? getProductFilter(product.id) : "none" }}
-
-                  />
-                  <div className="absolute top-4 right-4">
-                    <span className="px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest bg-white/10 backdrop-blur-md border border-white/20 text-foreground shadow-lg">
-                      In Stock
-                    </span>
-                  </div>
-                </div>
-
-                <div className="space-y-3 px-2 mb-8">
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs font-black uppercase tracking-[0.1em] sm:tracking-[0.2em] text-blue-500">{product.category}</span>
-                    <div className="flex gap-1">
-                      {[1, 2, 3, 4, 5].map((s) => (
-                        <div key={s} className={`w-1.5 h-1.5 rounded-full ${s <= 4 ? "bg-blue-500" : "bg-muted"}`} />
-                      ))}
-                    </div>
-                  </div>
-                  <h3 className="text-2xl font-black text-foreground tracking-tight group-hover:text-blue-500 transition-colors leading-tight">
-                    {product.name}
-                  </h3>
-                  <p className="text-muted-foreground text-sm line-clamp-2 leading-relaxed font-medium">
-                    {product.description}
-                  </p>
-                </div>
-
-                <div className="flex items-center justify-between px-2 pt-6 border-t border-border">
-                  <div className="flex flex-col">
-                    <span className="text-[10px] uppercase tracking-widest font-bold text-muted-foreground mb-1">MSRP</span>
-                    <span className="text-3xl font-black text-foreground tracking-tighter">${product.price.toLocaleString()}</span>
-                  </div>
-                </div>
-              </Link>
-
-              {/* Quick Add Button */}
-              <motion.button
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                onClick={(e) => handleAddToCart(e, product)}
-                className={`absolute bottom-8 right-8 w-14 h-14 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center shadow-2xl transition-all duration-500 z-20 ${
-                  addedItems.includes(product.id)
-                    ? "bg-green-500 text-white translate-y-0 opacity-100"
-                    : "bg-blue-600 text-white opacity-100 md:translate-y-4 md:opacity-0 md:group-hover:translate-y-0 md:group-hover:opacity-100 hover:bg-blue-500"
-                }`}
-              >
-                {addedItems.includes(product.id) ? (
-                  <Check className="w-6 h-6" />
-                ) : (
-                  <Plus className="w-6 h-6" />
-                )}
-              </motion.button>
-            </motion.div>
+            <ProductCard 
+              key={product.id} 
+              product={product} 
+              isDark={isDark} 
+              handleAddToCart={handleAddToCart} 
+              addedItems={addedItems} 
+              getProductFilter={getProductFilter} 
+            />
           ))}
         </AnimatePresence>
       </motion.div>
     </div>
   );
 }
+
