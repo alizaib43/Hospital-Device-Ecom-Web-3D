@@ -118,7 +118,7 @@ export default function ProductClient() {
               alt={product.name}
               width={800}
               height={800}
-              className="w-full h-auto object-contain drop-shadow-[0_50px_100px_rgba(0,0,0,0.15)] dark:drop-shadow-[0_50px_100px_rgba(0,0,0,0.5)] relative z-10"
+              className={`w-full h-auto object-contain drop-shadow-[0_50px_100px_rgba(0,0,0,0.15)] dark:drop-shadow-[0_50px_100px_rgba(0,0,0,0.5)] relative z-10 ${isDark ? "mix-blend-lighten contrast-125" : "mix-blend-multiply contrast-110"}`}
               style={{ translateZ: 100, filter: getProductFilter(product.id) }}
             />
           </motion.div>

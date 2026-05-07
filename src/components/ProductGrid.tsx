@@ -63,13 +63,16 @@ function ProductCard({ product, isDark, handleAddToCart, addedItems, getProductF
       />
 
       <Link href={`/products/${product.id}`} className="block p-6 sm:p-8 lg:p-10 pb-4 relative z-10" style={{ transform: "translateZ(50px)" }}>
-        <div className="aspect-[4/3] rounded-[2rem] bg-muted/30 mb-8 relative overflow-hidden flex items-center justify-center group-hover:bg-muted/50 transition-colors">
+        <div className="aspect-[4/3] rounded-[2rem] mb-8 relative overflow-hidden flex items-center justify-center group-hover:bg-muted/10 transition-colors">
+          {/* Studio Spotlight Background */}
+          <div className={`absolute inset-0 z-0 transition-opacity duration-700 opacity-50 group-hover:opacity-100 ${isDark ? "bg-gradient-to-b from-blue-500/10 to-transparent" : "bg-gradient-to-b from-blue-500/5 to-transparent"}`} />
+          
           <Image 
             src={getAssetPath(product.image)} 
             alt={product.name}
             width={300}
             height={300}
-            className="object-contain p-8 transition-transform duration-700 group-hover:scale-110"
+            className={`object-contain p-8 transition-transform duration-700 group-hover:scale-110 relative z-10 ${isDark ? "mix-blend-lighten contrast-125" : "mix-blend-multiply contrast-110"}`}
             style={{ 
               filter: isDark ? getProductFilter(product.id) : "none",
               transform: "translateZ(80px)" 
